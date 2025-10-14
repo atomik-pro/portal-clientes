@@ -1,19 +1,26 @@
 import { AuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: AuthOptions = {
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      authorization: {
-        params: {
-          prompt: 'select_account',
-          access_type: 'offline',
-          response_type: 'code',
-          include_garanted_scopes: 'true',
-          state: process.env.NEXTAUTH_SECRET
-        }
+    CredentialsProvider({
+      name: 'Credenciales',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Contraseña', type: 'password' }
+      },
+      async authorize(credentials) {
+        const email = credentials?.email as string;
+        const password = credentials?.password as string;
+
+        // Validación mínima para desarrollo. Sustituir por validación real contra backend.
+        if (!email || !password) return null;
+
+        return {
+          id: email,
+          name: email.split('@')[0],
+          email
+        };
       }
     })
   ],
@@ -22,11 +29,9 @@ export const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60
   },
   callbacks: {
-    async signIn({ account, profile }) {
-      if (account?.provider === 'google') {
-        return profile?.email?.endsWith('@atomik.pro') ?? false;
-      }
-      return false;
+    async signIn({ account }) {
+      // Permitir inicio de sesión mediante credenciales
+      return account?.provider === 'credentials';
     },
     async session({ session, token }) {
       if (session.user) {
@@ -35,13 +40,17 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
-    async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        if (profile) {
-          token.name = profile.name;
-          token.email = profile.email;
-        }
+    async jwt({ token, user, account }) {
+      // Para credenciales, tomar datos del usuario autenticado
+      if (user) {
+        token.name = user.name;
+        token.email = user.email as string;
+      }
+      // No hay access_token en credenciales; conservar si existiera
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (account && (account as any).access_token) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (token as any).accessToken = (account as any).access_token;
       }
       return token;
     }

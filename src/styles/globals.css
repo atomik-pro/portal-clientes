@@ -28,6 +28,15 @@
   font-weight: 300;
 }
 
+/* Gradiente personalizado para el botón */
+.bg-atomik-gradient {
+  background: linear-gradient(to left, #8d30ff 0%, #bb86fc 100%);
+}
+
+.bg-atomik-gradient:hover {
+  background: linear-gradient(to left, #7a2ae6 0%, #a876e9 100%);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

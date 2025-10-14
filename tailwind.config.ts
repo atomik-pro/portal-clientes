@@ -10,7 +10,7 @@ const config: Config = {
     ],
     theme: {
         fontFamily: {
-            montserrat: [
+            poppins: [
                 'Poppins',
                 'sans-serif'
             ]
@@ -19,8 +19,8 @@ const config: Config = {
             colors: {
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
-                violetaPrincipal: '#BB86FC',
-                violetaSecundario: '#9747FF',
+                violetaPrincipal: '#8D30FF',
+                violetaSecundario: '#BB86FC',
                 grisPrincipal: '#D9D9D9',
                 sombraCards: '#FAF8F8',
                 blanco: '#FFFFFF',
