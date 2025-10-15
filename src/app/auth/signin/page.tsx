@@ -21,7 +21,7 @@ export default function SignInPage() {
       email,
       password,
       redirect: true,
-      callbackUrl: '/'
+      callbackUrl: '/dashboard'
     });
     // Cuando redirect es true, NextAuth gestiona la navegación. Manejamos errores en caso de no redirigir:
     if (res && res.error) {
