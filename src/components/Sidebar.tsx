@@ -15,13 +15,12 @@ import iconMisArchivos from '@/assets/icons/Mis archivos.svg';
 import iconAjustes from '@/assets/icons/ajustes.svg';
 import iconNotificaciones from '@/assets/icons/notificaciones.svg';
 
-// Mock data para los integrantes del equipo
 const teamMembers = [
   {
     id: 1,
     name: 'Luz',
     role: 'CS Manager',
-    avatar: '/team/luz.jpg', // Placeholder - puedes reemplazar con imágenes reales
+    avatar: '/team/luz.jpg',
     initials: 'L',
     gmail: 'luz@atomik.pro',
     number: '+56 999 999 999'
