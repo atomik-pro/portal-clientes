@@ -53,7 +53,7 @@ type MenuItem = {
 const menuItems: MenuItem[] = [
   { name: 'Inicio', icon: iconInicio, key: 'inicio' },
   { name: 'Creativos', icon: iconCreativos, key: 'creativos' },
-  { name: 'Reportorio', icon: iconReportes, key: 'reporteria' },
+  { name: 'Reporteria', icon: iconReportes, key: 'reporteria' },
   { name: 'Finanzas', icon: iconFinanzas, key: 'finanzas' },
   { name: 'Acuerdos', icon: iconLegales, key: 'acuerdos' },
   { name: 'Solicitudes', icon: iconSolicitar, key: 'solicitudes' },

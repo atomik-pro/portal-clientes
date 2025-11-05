@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
 import { useSidebar } from '@/hooks/sidebar-context';
 import FinanzasSection from '@/components/sections/FinanzasSection';
+import ReporteriaSection from '@/components/sections/ReporteriaSection';
 
 import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
@@ -84,6 +85,7 @@ export default function Dashboard() {
           )}
 
           {activeSection === 'finanzas' && <FinanzasSection />}
+          {activeSection === 'reporteria' && <ReporteriaSection />}
 
           {/* TODO: otras secciones */}
         </main>
