@@ -37,6 +37,10 @@
   background: linear-gradient(to left, #7a2ae6 0%, #a876e9 100%);
 }
 
+.bg-atomik-gradient-inverse {
+  background: linear-gradient(to right, #8d30ff 0%, #bb86fc 100%);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

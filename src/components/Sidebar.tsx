@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import type { StaticImageData } from 'next/image';
 import { useState } from 'react';
+import { useSidebar } from '@/hooks/sidebar-context';
 import iconInicio from '@/assets/icons/Inicio.svg';
 import iconReportes from '@/assets/icons/Reportes.svg';
 import iconRecursos from '@/assets/icons/Recursos.svg';
@@ -45,24 +45,29 @@ const teamMembers = [
   }
 ];
 
-const menuItems = [
-  { name: 'Inicio', icon: iconInicio, href: '/dashboard' },
-  { name: 'Creativos', icon: iconCreativos, href: '/creativos' },
-  { name: 'Reportorio', icon: iconReportes, href: '/reportes' },
-  { name: 'Finanzas', icon: iconFinanzas, href: '/finanzas' },
-  { name: 'Acuerdos', icon: iconLegales, href: '/legales' },
-  { name: 'Solicitudes', icon: iconSolicitar, href: '/solicitar' },
-  { name: 'Recursos', icon: iconRecursos, href: '/recursos' },
-  { name: 'Mis archivos', icon: iconMisArchivos, href: '/archivos' }
+type MenuItem = {
+  name: string;
+  icon: StaticImageData | string;
+  key: import('@/hooks/sidebar-context').SidebarSection;
+};
+const menuItems: MenuItem[] = [
+  { name: 'Inicio', icon: iconInicio, key: 'inicio' },
+  { name: 'Creativos', icon: iconCreativos, key: 'creativos' },
+  { name: 'Reportorio', icon: iconReportes, key: 'reporteria' },
+  { name: 'Finanzas', icon: iconFinanzas, key: 'finanzas' },
+  { name: 'Acuerdos', icon: iconLegales, key: 'acuerdos' },
+  { name: 'Solicitudes', icon: iconSolicitar, key: 'solicitudes' },
+  { name: 'Recursos', icon: iconRecursos, key: 'recursos' },
+  { name: 'Mis archivos', icon: iconMisArchivos, key: 'archivos' }
 ];
 
-const bottomItems = [
-  { name: 'Mi equipo', icon: iconAjustes, href: '/ajustes' },
-  { name: 'Noticias', icon: iconNotificaciones, href: '/notificaciones' }
+const bottomItems: MenuItem[] = [
+  { name: 'Mi equipo', icon: iconAjustes, key: 'ajustes' },
+  { name: 'Noticias', icon: iconNotificaciones, key: 'notificaciones' }
 ];
 
 export default function Sidebar() {
-  const pathname = usePathname();
+  const { activeSection, setActiveSection } = useSidebar();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showTeamDropdown, setShowTeamDropdown] = useState(false);
 
@@ -78,10 +83,11 @@ export default function Sidebar() {
         <ul className="space-y-2">
           {menuItems.map((item) => (
             <li key={item.name}>
-              <Link
-                href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-l-full text-sm font-medium transition-all duration-200 ${
-                  pathname === item.href
+              <button
+                type="button"
+                onClick={() => setActiveSection(item.key)}
+                className={`flex w-full items-center gap-3 px-3 py-2 rounded-l-full text-sm font-medium transition-all duration-200 ${
+                  activeSection === item.key
                     ? 'bg-atomik-gradient text-white shadow-lg'
                     : 'text-[#191919] hover:text-[#8D30FF]'
                 }`}>
@@ -89,7 +95,7 @@ export default function Sidebar() {
                   <Image
                     src={item.icon}
                     alt=""
-                    className={`h-5 w-5 ${pathname === item.href ? 'brightness-0 invert' : 'brightness-0'}`}
+                    className={`h-5 w-5 ${activeSection === item.key ? 'brightness-0 invert' : 'brightness-0'}`}
                   />
                 </div>
                 <span
@@ -100,7 +106,7 @@ export default function Sidebar() {
                   }`}>
                   {item.name}
                 </span>
-              </Link>
+              </button>
             </li>
           ))}
         </ul>
@@ -205,14 +211,14 @@ export default function Sidebar() {
               {item.name === 'Mi equipo' ? (
                 <div
                   className={`group flex items-center gap-3 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer relative ${
-                    pathname === item.href
+                    activeSection === item.key
                       ? 'bg-atomik-gradient text-white shadow-lg'
                       : 'text-[#191919] hover:text-white'
                   }`}>
                   {/* Background gradient for hover */}
                   <div
                     className={`absolute inset-0 rounded-full transition-all duration-200 ${
-                      pathname !== item.href
+                      activeSection !== item.key
                         ? 'bg-gradient-to-r from-[#8D30FF] to-[#551D99] opacity-0 group-hover:opacity-100'
                         : ''
                     }`}
@@ -224,7 +230,7 @@ export default function Sidebar() {
                       src={item.icon}
                       alt=""
                       className={`h-5 w-5 transition-all duration-200 ${
-                        pathname === item.href
+                        activeSection === item.key
                           ? 'brightness-0 invert'
                           : 'brightness-0 group-hover:brightness-0 group-hover:invert'
                       }`}
@@ -236,7 +242,7 @@ export default function Sidebar() {
                         ? 'opacity-100 translate-x-0'
                         : 'opacity-0 -translate-x-2'
                     } ${
-                      pathname === item.href
+                      activeSection === item.key
                         ? 'font-bold'
                         : 'font-medium group-hover:font-bold'
                     }`}>
@@ -244,10 +250,11 @@ export default function Sidebar() {
                   </span>
                 </div>
               ) : (
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    pathname === item.href
+                <button
+                  type="button"
+                  onClick={() => setActiveSection(item.key)}
+                  className={`flex w-full items-center gap-3 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    activeSection === item.key
                       ? 'bg-atomik-gradient text-white shadow-lg'
                       : 'text-[#191919] hover:text-[#8D30FF]'
                   }`}>
@@ -255,7 +262,7 @@ export default function Sidebar() {
                     <Image
                       src={item.icon}
                       alt=""
-                      className={`h-5 w-5 ${pathname === item.href ? 'brightness-0 invert' : 'brightness-0'}`}
+                      className={`h-5 w-5 ${activeSection === item.key ? 'brightness-0 invert' : 'brightness-0'}`}
                     />
                   </div>
                   <span
@@ -266,7 +273,7 @@ export default function Sidebar() {
                     }`}>
                     {item.name}
                   </span>
-                </Link>
+                </button>
               )}
             </li>
           ))}

@@ -94,7 +94,7 @@ export default function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-1/2 mt-2 rounded-xl bg-atomik-gradient px-4 py-4 font-bold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 disabled:opacity-60 transition-all duration-200">
+                className="w-1/2 mt-2 rounded-xl bg-atomik-gradient px-4 py-4 font-bold text-white shadow-sm focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-violet-600 disabled:opacity-60 transition-all duration-200">
                 {loading ? 'Iniciando...' : 'Iniciar Sesión'}
               </button>
             </div>

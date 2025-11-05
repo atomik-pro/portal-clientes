@@ -3,6 +3,8 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
+import { useSidebar } from '@/hooks/sidebar-context';
+import FinanzasSection from '@/components/sections/FinanzasSection';
 
 import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
@@ -11,6 +13,7 @@ import CampaignsTable from '@/components/CampaignsTable';
 
 export default function Dashboard() {
   const { data: session } = useSession();
+  const { activeSection } = useSidebar();
 
   const userName =
     session?.user?.name || session?.user?.email?.split('@')[0] || 'Usuario';
@@ -48,44 +51,41 @@ export default function Dashboard() {
       <div className="flex flex-1 px-4 overflow-hidden">
         <Sidebar />
         <main className="flex-1 p-2">
-          {/* Hero Section */}
-          <div className="relative rounded-3xl p-8 mb-8 overflow-hidden min-h-[calc(100vh-120px)] bg-gradient-to-br from-violet-100 via-purple-50 to-pink-100">
-            {/* Background Image */}
-            <div className="absolute right-0 top-0 h-full w-full hidden lg:block">
-              <Image
-                src={heroImg}
-                alt="Dashboard Atomik Home"
-                fill
-                className="object-cover object-right"
-                priority
-              />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 h-full">
-              <h1 className="text-4xl font-bold text-gray-900 mb-12">
-                Hola, {userName}!
-              </h1>
-
-              {/* Stats and Table Layout */}
-              <div className="flex gap-8 h-[calc(100%-120px)]">
-                {/* Stats Cards Column */}
-                <div className="flex flex-col justify-between w-80 space-y-6">
-                  {statsData.map((stat, index) => (
-                    <StatsCard key={index} {...stat} />
-                  ))}
+          {activeSection === 'inicio' && (
+            <div className="relative rounded-3xl p-8 mb-8 overflow-hidden min-h-[calc(100vh-120px)] bg-gradient-to-br from-white via-[#E4E4E4] to-[#F5F5F5]">
+              {/* Background Image */}
+              <div className="absolute right-0 top-0 h-full w-full hidden lg:block">
+                <Image
+                  src={heroImg}
+                  alt="Dashboard Atomik Home"
+                  fill
+                  className="object-cover object-right"
+                  priority
+                />
+              </div>
+              {/* Content */}
+              <div className="relative z-10 h-full">
+                <h1 className="text-4xl font-bold text-gray-900 mb-12">
+                  Hola, {userName}!
+                </h1>
+                <div className="flex gap-8 h-[calc(100%-120px)]">
+                  <div className="flex flex-col justify-between w-80 space-y-6">
+                    {statsData.map((stat, index) => (
+                      <StatsCard key={index} {...stat} />
+                    ))}
+                  </div>
+                  <div className="flex-1 max-w-2xl">
+                    <CampaignsTable campaigns={campaignsData} />
+                  </div>
+                  <div className="flex-1 min-w-0"></div>
                 </div>
-
-                {/* Campaigns Table Column */}
-                <div className="flex-1 max-w-2xl">
-                  <CampaignsTable campaigns={campaignsData} />
-                </div>
-
-                {/* Right space for background image */}
-                <div className="flex-1 min-w-0"></div>
               </div>
             </div>
-          </div>
+          )}
+
+          {activeSection === 'finanzas' && <FinanzasSection />}
+
+          {/* TODO: otras secciones */}
         </main>
       </div>
     </div>
