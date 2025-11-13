@@ -1,12 +1,12 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useSidebar } from '@/hooks/sidebar-context';
 import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
-import { useSidebar } from '@/hooks/sidebar-context';
 import FinanzasSection from '@/components/sections/FinanzasSection';
 import ReporteriaSection from '@/components/sections/ReporteriaSection';
-
+import RecursosSection from '@/components/sections/RecursosSection';
 import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
 import StatsCard from '@/components/StatsCard';
@@ -86,8 +86,7 @@ export default function Dashboard() {
 
           {activeSection === 'finanzas' && <FinanzasSection />}
           {activeSection === 'reporteria' && <ReporteriaSection />}
-
-          {/* TODO: otras secciones */}
+          {activeSection === 'recursos' && <RecursosSection />}
         </main>
       </div>
     </div>

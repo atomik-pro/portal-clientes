@@ -1,14 +1,11 @@
 Development Guidelines (Cleaned & Performance-Oriented)
-
 ## Architecture
-
 - Use functional components with TypeScript interfaces.
 - Use App Router (app/ directory).
 - Prefer Server Components; use use client only when required (event listeners, browser-only APIs, client state).
 - Split features into folders: components, hooks, lib, services, types, constants.
 
 ## Naming Conventions
-
 - PascalCase → Components, Types, Interfaces
 - camelCase → Variables, Functions, Hooks, Props
 - kebab-case → Folders and files (e.g., auth-form.tsx)
@@ -19,7 +16,6 @@ Development Guidelines (Cleaned & Performance-Oriented)
   - Hooks: useSomething
 
 ## Styling
-
 - Use TailwindCSS for utility-first styling.
 - Use ShadCN for UI components; extend with Radix UI if needed.
 - Design mobile-first.
@@ -27,7 +23,6 @@ Development Guidelines (Cleaned & Performance-Oriented)
 - Avoid custom CSS unless strictly necessary.
 
 ## Performance Practices
-
 - Use React.memo, useMemo, useCallback where beneficial.
 - Avoid inline functions in JSX.
 - Use dynamic imports (next/dynamic) for code splitting.
@@ -35,7 +30,6 @@ Development Guidelines (Cleaned & Performance-Oriented)
 - Minimize re-renders with proper state separation.
 
 ## State Management
-
 - Local:
   - useState for simple UI state
   - useReducer for complex or grouped state
@@ -48,7 +42,6 @@ Development Guidelines (Cleaned & Performance-Oriented)
   - Use selectors
 
 ## TypeScript Usage
-
 - Enable strict mode
 - Always type props, state, return values
 - Use interface over type (for extension)
@@ -57,7 +50,6 @@ Development Guidelines (Cleaned & Performance-Oriented)
 - Avoid any
 
 ## Next.js Practices
-
 - Use Image and Link from next/image and next/link
 - Use metadata for SEO
 - Use built-in caching strategies
@@ -66,12 +58,10 @@ Development Guidelines (Cleaned & Performance-Oriented)
 - Use environment variables via process.env
 
 ## Forms & Validation
-
 - Use React Hook Form + Zod for validation
 - Keep forms modular and controlled
 
 ## Protocolo de Commits
-
 No tengo permitido hacer `commit` por mi cuenta. Cuando me lo solicites, generaré un mensaje de `commit` siguiendo la especificación de **Conventional Commits**. Esto asegura un historial de cambios limpio, legible y automatizable.
 
 La estructura del mensaje será:
