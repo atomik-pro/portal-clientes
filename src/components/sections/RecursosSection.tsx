@@ -8,20 +8,20 @@ import React, {
   useState
 } from 'react';
 
-import Image from 'next/image';
 // Card SVG assets (provided by user in src/assets/recurs)
-import CardAtomikAcademy from '@/assets/recurs/Card-AtomikAcademy.svg';
-import CardBestParctices from '@/assets/recurs/Card-BestParctices.svg';
-import CardCircuitos from '@/assets/recurs/Card-CirDeServicios.svg';
-import CardGaleriaRich from '@/assets/recurs/Card-GaleriaDeRM.svg';
-import CardGaleriaVideoPlus from '@/assets/recurs/Card-GaleriaDeVideo.svg';
-import CardManualDash from '@/assets/recurs/Card-ManualDeDash.svg';
-import CardMediakits from '@/assets/recurs/Card-MediaKit.svg';
-import CardPresentacionFormatos from '@/assets/recurs/Card-PresDeFormato.svg';
-import CardProyectorDigital from '@/assets/recurs/Card-ProyectorDigital.svg';
-import CardSLAs from '@/assets/recurs/Card-SLAs.svg';
-import CardSpecs from '@/assets/recurs/Card-Specs.svg';
-import CardSpecsTemplateVideo from '@/assets/recurs/Card-SpecsTemplateVideo.svg';
+// Using relative imports to avoid alias resolution issues on Vercel (case-sensitive env)
+import CardAtomikAcademy from '../../assets/recurs/Card-AtomikAcademy.svg';
+import CardBestParctices from '../../assets/recurs/Card-BestParctices.svg';
+import CardCircuitos from '../../assets/recurs/Card-CirDeServicios.svg';
+import CardGaleriaRich from '../../assets/recurs/Card-GaleriaDeRM.svg';
+import CardGaleriaVideoPlus from '../../assets/recurs/Card-GaleriaDeVideo.svg';
+import CardManualDash from '../../assets/recurs/Card-ManualDeDash.svg';
+import CardMediakits from '../../assets/recurs/Card-MediaKit.svg';
+import CardPresentacionFormatos from '../../assets/recurs/Card-PresdeFormato.svg';
+import CardProyectorDigital from '../../assets/recurs/Card-ProyectorDigital.svg';
+import CardSLAs from '../../assets/recurs/Card-SLAs.svg';
+import CardSpecs from '../../assets/recurs/Card-Specs.svg';
+import CardSpecsTemplateVideo from '../../assets/recurs/Card-SpecstemplateVideo.svg';
 
 interface ResourceItem {
   id: string;
@@ -214,7 +214,7 @@ function ResourceTile({ item }: { item: ResourceItem }) {
       aria-label={`${item.name} (${item.description})`}>
       {/* Card artwork (SVG) provided by design */}
       {item.imageSrc ? (
-        <Image
+        <img
           src={item.imageSrc}
           alt=""
           aria-hidden="true"
