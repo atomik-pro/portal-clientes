@@ -8,20 +8,20 @@ import React, {
   useState
 } from 'react';
 
-// Card SVG assets (provided by user in src/assets/recurs)
-import CardAtomikAcademy from '@/assets/recurs/Card-AtomikAcademy.svg';
-import CardBestParctices from '@/assets/recurs/Card-BestParctices.svg';
-import CardCircuitos from '@/assets/recurs/Card-CirDeServicios.svg';
-import CardGaleriaRich from '@/assets/recurs/Card-GaleriaDeRM.svg';
-import CardGaleriaVideoPlus from '@/assets/recurs/Card-GaleriaDeVideo.svg';
-import CardManualDash from '@/assets/recurs/Card-ManualDeDash.svg';
-import CardMediakits from '@/assets/recurs/Card-MediaKit.svg';
-import CardPresentacionFormatos from '@/assets/recurs/Card-PresDeFormato.svg';
-import CardProyectorDigital from '@/assets/recurs/Card-ProyectorDigital.svg';
-import CardSLAs from '@/assets/recurs/Card-SLAs.svg';
-import CardSpecs from '@/assets/recurs/Card-Specs.svg';
-import CardSpecsTemplateVideo from '@/assets/recurs/Card-SpecsTemplateVideo.svg';
 import Image from 'next/image';
+// Card SVG assets (provided by user in src/assets/recurs)
+import CardAtomikAcademy from '@/../assets/recurs/Card-AtomikAcademy.svg';
+import CardBestParctices from '@/../assets/recurs/Card-BestParctices.svg';
+import CardCircuitos from '@/../assets/recurs/Card-CirDeServicios.svg';
+import CardGaleriaRich from '@/../assets/recurs/Card-GaleriaDeRM.svg';
+import CardGaleriaVideoPlus from '@/../assets/recurs/Card-GaleriaDeVideo.svg';
+import CardManualDash from '@/../assets/recurs/Card-ManualDeDash.svg';
+import CardMediakits from '@/../assets/recurs/Card-MediaKit.svg';
+import CardPresentacionFormatos from '@/../assets/recurs/Card-PresDeFormato.svg';
+import CardProyectorDigital from '@/../assets/recurs/Card-ProyectorDigital.svg';
+import CardSLAs from '@/../assets/recurs/Card-SLAs.svg';
+import CardSpecs from '@/../assets/recurs/Card-Specs.svg';
+import CardSpecsTemplateVideo from '@/../assets/recurs/Card-SpecsTemplateVideo.svg';
 
 interface ResourceItem {
   id: string;
