@@ -8,6 +8,21 @@ import React, {
   useState
 } from 'react';
 
+// Card SVG assets (provided by user in src/assets/recurs)
+import CardAtomikAcademy from '../../assets/recurs/Card-AtomikAcademy.svg';
+import CardBestParctices from '../../assets/recurs/Card-BestParctices.svg';
+import CardCircuitos from '../../assets/recurs/Card-CirDeServicios.svg';
+import CardGaleriaRich from '../../assets/recurs/Card-GaleriaDeRM.svg';
+import CardGaleriaVideoPlus from '../../assets/recurs/Card-GaleriaDeVideo.svg';
+import CardManualDash from '../../assets/recurs/Card-ManualDeDash.svg';
+import CardMediakits from '../../assets/recurs/Card-MediaKit.svg';
+import CardPresentacionFormatos from '../../assets/recurs/Card-PresDeFormato.svg';
+import CardProyectorDigital from '../../assets/recurs/Card-ProyectorDigital.svg';
+import CardSLAs from '../../assets/recurs/Card-SLAs.svg';
+import CardSpecs from '../../assets/recurs/Card-Specs.svg';
+import CardSpecsTemplateVideo from '../../assets/recurs/Card-SpecsTemplateVideo.svg';
+import Image from 'next/image';
+
 interface ResourceItem {
   id: string;
   name: string;
@@ -20,9 +35,10 @@ interface ResourceItem {
   sizeMB?: number;
   updatedAt?: string;
   icon?: 'doc' | 'image' | 'video' | 'settings';
+  imageSrc?: string; // optional SVG background for the card
 }
 
-type ActiveMenu = 'mediakit' | 'specs' | null;
+type Category = 'mediakit' | 'spec' | 'all';
 
 const initialResources: ResourceItem[] = [
   {
@@ -34,7 +50,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Educación'],
     href: '/downloads/manuales/atomik-academy.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardAtomikAcademy
   },
   {
     id: 'r-102',
@@ -45,7 +62,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Buenas prácticas'],
     href: '/downloads/manuales/best-practices.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardBestParctices
   },
   {
     id: 'r-103',
@@ -56,7 +74,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Servicio'],
     href: '/downloads/presentaciones/circuitos-servicio.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardCircuitos
   },
   {
     id: 'r-104',
@@ -67,7 +86,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Rich Media'],
     href: '/downloads/galerias/richmedia.zip',
     fileType: 'ZIP',
-    icon: 'image'
+    icon: 'image',
+    imageSrc: CardGaleriaRich
   },
   {
     id: 'r-105',
@@ -78,7 +98,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Video+'],
     href: '/downloads/galerias/video-plus.zip',
     fileType: 'ZIP',
-    icon: 'video'
+    icon: 'video',
+    imageSrc: CardGaleriaVideoPlus
   },
   {
     id: 'r-106',
@@ -89,7 +110,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Dash'],
     href: '/downloads/manuales/manual-dash.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardManualDash
   },
   {
     id: 'r-107',
@@ -100,7 +122,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Atomik'],
     href: '/downloads/mediakits/mediakit-atomik-2025.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardMediakits
   },
   {
     id: 'r-108',
@@ -111,7 +134,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Formatos'],
     href: '/downloads/presentaciones/presentacion-formatos.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardPresentacionFormatos
   },
   {
     id: 'r-109',
@@ -122,7 +146,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Showcase'],
     href: '/downloads/galerias/proyector-digital.zip',
     fileType: 'ZIP',
-    icon: 'image'
+    icon: 'image',
+    imageSrc: CardProyectorDigital
   },
   {
     id: 'r-110',
@@ -133,7 +158,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Acuerdos'],
     href: '/downloads/manuales/slas.pdf',
     fileType: 'PDF',
-    icon: 'settings'
+    icon: 'settings',
+    imageSrc: CardSLAs
   },
   {
     id: 'r-111',
@@ -144,7 +170,8 @@ const initialResources: ResourceItem[] = [
     tags: ['Specs'],
     href: '/downloads/specs/specs-display.pdf',
     fileType: 'PDF',
-    icon: 'doc'
+    icon: 'doc',
+    imageSrc: CardSpecs
   },
   {
     id: 'r-112',
@@ -155,156 +182,58 @@ const initialResources: ResourceItem[] = [
     tags: ['Video', 'Template'],
     href: '/downloads/specs/specs-template-video.docx',
     fileType: 'DOC',
-    icon: 'video'
+    icon: 'video',
+    imageSrc: CardSpecsTemplateVideo
   }
 ];
 
-const mediakitOptions = ['Atomik', 'Display', 'Rich Media', 'Video', 'Audio'];
-const specsOptions = ['Display', 'Video', 'Audio', 'Mobile', 'HTML5', 'VAST'];
+const mediakitOptions = [
+  'Atomik',
+  'Display',
+  'Rich Media',
+  'Video',
+  'Audio'
+] as const;
+const specsOptions = [
+  'Display',
+  'Video',
+  'Audio',
+  'Mobile',
+  'HTML5',
+  'VAST'
+] as const;
 
 function ResourceTile({ item }: { item: ResourceItem }) {
   const baseClasses =
-    'group relative rounded-[24px] aspect-square p-4 shadow-lg transition-transform hover:-translate-y-[2px] hover:shadow-xl';
-  const gradientClasses =
-    'bg-gradient-to-b from-[#C696FF] via-[#B072FF] to-[#8E4BFF]';
+    'group relative rounded-[22px] aspect-square overflow-hidden bg-transparent transition-transform hover:-translate-y-[2px]';
   return (
     <a
       href={item.href}
       download={item.fileType !== 'ZIP'}
-      className={`${baseClasses} ${gradientClasses}`}
-      aria-label={`${item.name} (${item.groupLabel})`}>
-      <div className="pointer-events-none absolute inset-x-3 top-3 h-[42%] rounded-[20px] bg-white/18" />
-      <div className="flex items-center gap-2">
-        <div className="grid place-items-center w-12 h-12 rounded-2xl bg-white/25 text-white">
-          {item.icon === 'doc' && (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect
-                x="5"
-                y="3"
-                width="14"
-                height="18"
-                rx="2.5"
-                fill="currentColor"
-                opacity="0.9"
-              />
-              <line
-                x1="8"
-                y1="8"
-                x2="16"
-                y2="8"
-                stroke="#fff"
-                strokeWidth="1.8"
-              />
-              <line
-                x1="8"
-                y1="12"
-                x2="16"
-                y2="12"
-                stroke="#fff"
-                strokeWidth="1.8"
-              />
-              <line
-                x1="8"
-                y1="16"
-                x2="13"
-                y2="16"
-                stroke="#fff"
-                strokeWidth="1.8"
-              />
-            </svg>
-          )}
-          {item.icon === 'image' && (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect
-                x="3"
-                y="5"
-                width="18"
-                height="14"
-                rx="2.5"
-                fill="currentColor"
-                opacity="0.9"
-              />
-              <circle cx="9" cy="10" r="2" fill="#fff" />
-              <path d="M5 17l4-4 3 3 4-5 3 6H5z" fill="#fff" />
-            </svg>
-          )}
-          {item.icon === 'video' && (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect
-                x="4"
-                y="5"
-                width="16"
-                height="14"
-                rx="2.5"
-                fill="currentColor"
-                opacity="0.9"
-              />
-              <polygon points="10,9 16,12 10,15" fill="#fff" />
-            </svg>
-          )}
-          {item.icon === 'settings' && (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.9" />
-              <circle cx="12" cy="12" r="3.2" fill="#fff" />
-              <path
-                d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2.2 2.2M15.8 15.8L18 18M6 18l2.2-2.2M15.8 8.2L18 6"
-                stroke="#fff"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
-          )}
-        </div>
-      </div>
-      <div className="absolute inset-x-4 bottom-4">
-        <h3 className="text-white font-semibold text-base leading-snug">
-          {item.name}
-        </h3>
-        <p className="text-white/80 text-xs">{item.groupLabel}</p>
-      </div>
+      className={baseClasses}
+      aria-label={`${item.name} (${item.description})`}>
+      {/* Card artwork (SVG) provided by design */}
+      {item.imageSrc ? (
+        <Image
+          src={item.imageSrc}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        // Fallback gradient if no SVG is provided
+        <div className="absolute inset-0 bg-gradient-to-b from-[#D7B6FF] via-[#B782FF] to-[#8A47FF]" />
+      )}
     </a>
   );
 }
 
 export default function RecursosSection() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  // Removed search field per Figma capture; keep only Filters menu
   const [activeTags, setActiveTags] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<
-    'mediakit' | 'spec' | 'all'
-  >('all');
-
-  const mediakitMenuRef = useRef<HTMLDivElement | null>(null);
-  const specsMenuRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleMenu = useCallback((menu: ActiveMenu) => {
-    setActiveMenu((prev) => (prev === menu ? null : menu));
-  }, []);
-
-  const closeMenus = useCallback(() => setActiveMenu(null), []);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const t = e.target as Node;
-      if (
-        mediakitMenuRef.current &&
-        !mediakitMenuRef.current.contains(t) &&
-        specsMenuRef.current &&
-        !specsMenuRef.current.contains(t)
-      ) {
-        closeMenus();
-      }
-    };
-    const esc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeMenus();
-    };
-    document.addEventListener('mousedown', handler);
-    document.addEventListener('keydown', esc);
-    return () => {
-      document.removeEventListener('mousedown', handler);
-      document.removeEventListener('keydown', esc);
-    };
-  }, [closeMenus]);
+  const [selectedCategory, setSelectedCategory] = useState<Category>('all');
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const filtersMenuRef = useRef<HTMLDivElement | null>(null);
 
   const addTag = useCallback((tag: string) => {
     setActiveTags((prev) => (prev.includes(tag) ? prev : [...prev, tag]));
@@ -316,113 +245,117 @@ export default function RecursosSection() {
 
   const clearFilters = useCallback(() => {
     setActiveTags([]);
-    setSearchQuery('');
     setSelectedCategory('all');
-    closeMenus();
-  }, [closeMenus]);
+    setFiltersOpen(false);
+  }, []);
 
   const filteredResources = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
     return initialResources.filter((res) => {
       if (selectedCategory !== 'all' && res.category !== selectedCategory)
         return false;
-      const inText =
-        res.name.toLowerCase().includes(query) ||
-        res.description.toLowerCase().includes(query) ||
-        res.tags.some((t) => t.toLowerCase().includes(query));
       const matchTags = activeTags.every((tag) => res.tags.includes(tag));
-      return (query === '' || inText) && matchTags;
+      return matchTags;
     });
-  }, [searchQuery, activeTags, selectedCategory]);
+  }, [activeTags, selectedCategory]);
 
   const handleMenuSelect = useCallback(
-    (group: 'mediakit' | 'specs', value: string) => {
-      setSelectedCategory(group === 'mediakit' ? 'mediakit' : 'spec');
+    (category: Exclude<Category, 'all'>, value: string) => {
+      setSelectedCategory(category);
       addTag(value);
-      closeMenus();
+      setFiltersOpen(false);
     },
-    [addTag, closeMenus]
+    [addTag]
   );
+
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (filtersMenuRef.current && !filtersMenuRef.current.contains(t)) {
+        setFiltersOpen(false);
+      }
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setFiltersOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
 
   return (
     <section className="rounded-[25px] mx-5 p-6 lg:p-8 bg-white shadow-md min-h-[calc(100vh-120px)]">
-      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <header className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-3">
-          <span className="inline-block w-8 h-4 rounded-r-full bg-violetaPrincipal" />
+          <span className="inline-block w-8 h-4 rounded-r-full bg-atomik-gradient" />
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
             Recursos
           </h2>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex items-center gap-3" ref={filtersMenuRef}>
           <div className="relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar recursos…"
-              className="w-full sm:w-80 rounded-xl border border-gray-300 bg-white/80 px-4 py-2 text-gray-800 placeholder:text-gray-400 focus:ring-2 focus:ring-violetaPrincipal focus:outline-none"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-              ⌘K
-            </span>
-          </div>
-          <div className="relative" ref={mediakitMenuRef}>
             <button
-              onClick={() => toggleMenu('mediakit')}
-              className={`rounded-xl px-4 py-2 border transition ${
-                activeMenu === 'mediakit'
-                  ? 'bg-violetaPrincipal text-white border-violetaPrincipal'
-                  : 'bg-white/80 text-gray-800 border-gray-300 hover:border-violetaPrincipal'
-              }`}>
-              MediaKits
+              onClick={() => setFiltersOpen((p) => !p)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#8D30FF] text-white text-sm shadow hover:shadow-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4">
+                <path d="M3 4h18v2l-7 7v5l-4 2v-7L3 6V4z" />
+              </svg>
+              Filtros
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4">
+                <path d="M8.12 9.29L12 13.17l3.88-3.88 1.41 1.41L12 16l-5.29-5.29z" />
+              </svg>
             </button>
-            {activeMenu === 'mediakit' && (
-              <div className="absolute z-20 mt-2 w-56 rounded-xl border border-gray-200 bg-white shadow-xl">
-                <ul className="py-2">
-                  {mediakitOptions.map((opt) => (
-                    <li key={opt}>
-                      <button
-                        onClick={() => handleMenuSelect('mediakit', opt)}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-50">
-                        {opt}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          <div className="relative" ref={specsMenuRef}>
-            <button
-              onClick={() => toggleMenu('specs')}
-              className={`rounded-xl px-4 py-2 border transition ${
-                activeMenu === 'specs'
-                  ? 'bg-violetaPrincipal text-white border-violetaPrincipal'
-                  : 'bg-white/80 text-gray-800 border-gray-300 hover:border-violetaPrincipal'
-              }`}>
-              Specs
-            </button>
-            {activeMenu === 'specs' && (
-              <div className="absolute z-20 mt-2 w-56 rounded-xl border border-gray-200 bg-white shadow-xl">
-                <ul className="py-2">
-                  {specsOptions.map((opt) => (
-                    <li key={opt}>
-                      <button
-                        onClick={() => handleMenuSelect('specs', opt)}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-50">
-                        {opt}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+            {filtersOpen && (
+              <div className="absolute right-0 z-20 mt-2 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2">
+                <div className="px-2 py-2">
+                  <p className="text-xs font-semibold text-gray-600 mb-1">
+                    MediaKits
+                  </p>
+                  <ul className="grid grid-cols-2 gap-1">
+                    {mediakitOptions.map((opt) => (
+                      <li key={opt}>
+                        <button
+                          onClick={() => handleMenuSelect('mediakit', opt)}
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50">
+                          {opt}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="px-2 py-2 border-t border-gray-100">
+                  <p className="text-xs font-semibold text-gray-600 mb-1">
+                    Specs
+                  </p>
+                  <ul className="grid grid-cols-2 gap-1">
+                    {specsOptions.map((opt) => (
+                      <li key={opt}>
+                        <button
+                          onClick={() => handleMenuSelect('spec', opt)}
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50">
+                          {opt}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
           </div>
 
           <button
             onClick={clearFilters}
-            className="rounded-xl px-4 py-2 border bg-white/80 text-gray-800 border-gray-300 hover:border-red-400 hover:text-red-600 transition">
+            className="rounded-full px-4 py-2 border bg-white/80 text-gray-800 border-gray-300 hover:border-red-400 hover:text-red-600 transition">
             Limpiar filtros
           </button>
         </div>
@@ -447,7 +380,7 @@ export default function RecursosSection() {
       )}
 
       {filteredResources.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {filteredResources.map((res) => (
             <ResourceTile key={res.id} item={res} />
           ))}
@@ -461,8 +394,7 @@ export default function RecursosSection() {
             No hay resultados
           </p>
           <p className="text-sm text-gray-600">
-            Intenta modificar la búsqueda o limpiar los filtros para ver más
-            recursos.
+            Ajusta los filtros para ver más recursos.
           </p>
         </div>
       )}

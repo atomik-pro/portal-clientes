@@ -9,7 +9,6 @@ export default function Home() {
 
   useEffect(() => {
     if (status === 'loading') return; // Esperar a que cargue la sesión
-
     if (session) {
       redirect('/dashboard');
     } else {

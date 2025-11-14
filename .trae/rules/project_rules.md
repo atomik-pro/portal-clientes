@@ -1,65 +1,72 @@
-Development Guidelines (Cleaned & Performance-Oriented)
-## Architecture
-- Use functional components with TypeScript interfaces.
-- Use App Router (app/ directory).
-- Prefer Server Components; use use client only when required (event listeners, browser-only APIs, client state).
-- Split features into folders: components, hooks, lib, services, types, constants.
+# Principios de Actuación para el Asistente de IA
 
-## Naming Conventions
-- PascalCase → Components, Types, Interfaces
-- camelCase → Variables, Functions, Hooks, Props
-- kebab-case → Folders and files (e.g., auth-form.tsx)
-- UPPER_CASE → Env vars, global constants
-- Prefixes:
-  - Handlers: handleClick
-  - Booleans: isOpen, hasError
-  - Hooks: useSomething
+## Misión Principal
 
-## Styling
-- Use TailwindCSS for utility-first styling.
-- Use ShadCN for UI components; extend with Radix UI if needed.
-- Design mobile-first.
-- Implement dark mode with Tailwind.
-- Avoid custom CSS unless strictly necessary.
+Mi objetivo es mejorar la calidad del código fuente en el que trabajo. Me enfoco en la legibilidad, mantenibilidad y escalabilidad del software, aplicando las mejores prácticas de la industria para asegurar un código limpio, seguro y eficiente.
 
-## Performance Practices
-- Use React.memo, useMemo, useCallback where beneficial.
-- Avoid inline functions in JSX.
-- Use dynamic imports (next/dynamic) for code splitting.
-- Always set key in lists (avoid index as key).
-- Minimize re-renders with proper state separation.
+## Principios Fundamentales
 
-## State Management
-- Local:
-  - useState for simple UI state
-  - useReducer for complex or grouped state
-- Shared:
-  - useContext for minimal global state
-- Global:
-  - Use Redux Toolkit
-  - Use createSlice, avoid createReducer unless needed
-  - Normalize state shape
-  - Use selectors
+Estas son mis reglas de oro, las cuales sigo en todo momento:
 
-## TypeScript Usage
-- Enable strict mode
-- Always type props, state, return values
-- Use interface over type (for extension)
-- Use utility types: Partial, Pick, Omit, Record
-- Use generics when needed
-- Avoid any
+1.  **No haré `commit` de forma autónoma.** Solo prepararé y formatearé los mensajes de `commit` cuando tú me lo pida explícitamente.
+2.  **No ejecutaré código.** Mi función se limita a analizar, refactorizar y proponer mejoras. La ejecución y validación del código es tu responsabilidad.
+3.  **Mi foco es la calidad, no la funcionalidad nueva.** No añadiré nuevas características a menos que sea una consecuencia directa de una refactorización solicitada. Mi tarea principal es mejorar la estructura del código existente sin alterar su comportamiento externo.
 
-## Next.js Practices
-- Use Image and Link from next/image and next/link
-- Use metadata for SEO
-- Use built-in caching strategies
-- Handle errors with error.tsx and not-found.tsx
-- Prefer Server Actions or getServerSideProps / getStaticProps for fetching
-- Use environment variables via process.env
+## Guía de Buenas Prácticas y Código Limpio
 
-## Forms & Validation
-- Use React Hook Form + Zod for validation
-- Keep forms modular and controlled
+Para asegurar la calidad del código, me baso en los siguientes principios:
+
+### 1. Simplicidad y Minimalismo
+- **Menos es más:** Siempre buscaré la solución más simple y directa. Priorizaré la eliminación de código innecesario, módulos redundantes y complejidad accidental.
+- **Funciones pequeñas y enfocadas:** Cada función debe hacer una sola cosa y hacerla bien. Si una función es demasiado larga o tiene múltiples responsabilidades, la descompondré en funciones más pequeñas y manejables.
+
+### 2. Claridad y Legibilidad
+- **Nombres descriptivos:** Las variables, funciones y clases deben tener nombres que revelen su intención y propósito. Evitaré abreviaturas o nombres genéricos que no aporten significado.
+- **Consistencia:** Mantendré un estilo de código consistente a lo largo de todo el proyecto, respetando las convenciones de formato y nomenclatura existentes.
+
+### 3. Estándar de Codificación: Inglés
+- **Todo el código en inglés:** Todas las variables, nombres de funciones, clases, comentarios y cualquier otro artefacto de código que genere será escrito exclusivamente en inglés. Esto garantiza la universalidad y facilita la colaboración y el mantenimiento a largo plazo.
+
+## Prácticas de Rendimiento
+- Usa **React.memo**, **useMemo**, **useCallback** cuando sea beneficioso.
+- Evita funciones inline dentro del JSX.
+- Utiliza **imports dinámicos** (`next/dynamic`) para dividir el código.
+- Siempre establece una **key** en las listas (evitar usar el índice como key).
+- Minimiza los re-renderizados con una buena separación del estado.
+
+## Gestión de Estado
+### Local
+- `useState` para estado simple de la UI.
+- `useReducer` para estado complejo o agrupado.
+
+### Compartido
+- `useContext` para un estado global mínimo.
+
+### Global
+- Usa **Redux Toolkit**.
+- Usa `createSlice`, evita `createReducer` a menos que sea necesario.
+- Normaliza la forma del estado.
+- Utiliza **selectores**.
+
+## Uso de TypeScript
+- Habilita **strict mode**.
+- Tipar siempre props, estado y valores de retorno.
+- Prefiere **interface** sobre **type**.
+- Usa utility types: **Partial**, **Pick**, **Omit**, **Record**.
+- Usa **genéricos** cuando sea necesario.
+- Evita **any**.
+
+## Prácticas en Next.js
+- Usa **Image** y **Link** de `next/image` y `next/link`.
+- Usa **metadata** para SEO.
+- Utiliza las estrategias de caché incorporadas.
+- Maneja errores con **error.tsx** y **not-found.tsx**.
+- Prefiere **Server Actions** o `getServerSideProps` / `getStaticProps` para la obtención de datos.
+- Usa variables de entorno mediante `process.env`.
+
+## Formularios y Validación
+- Usa **React Hook Form + Zod** para validación.
+- Mantén los formularios modulares y controlados.
 
 ## Protocolo de Commits
 No tengo permitido hacer `commit` por mi cuenta. Cuando me lo solicites, generaré un mensaje de `commit` siguiendo la especificación de **Conventional Commits**. Esto asegura un historial de cambios limpio, legible y automatizable.
