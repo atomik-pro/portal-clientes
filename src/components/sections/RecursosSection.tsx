@@ -22,6 +22,7 @@ import CardProyectorDigital from '../../assets/recurs/Card-ProyectorDigital.svg'
 import CardSLAs from '../../assets/recurs/Card-SLAs.svg';
 import CardSpecs from '../../assets/recurs/Card-Specs.svg';
 import CardSpecsTemplateVideo from '../../assets/recurs/Card-SpecstemplateVideo.svg';
+import Image from 'next/image';
 
 interface ResourceItem {
   id: string;
@@ -214,11 +215,13 @@ function ResourceTile({ item }: { item: ResourceItem }) {
       aria-label={`${item.name} (${item.description})`}>
       {/* Card artwork (SVG) provided by design */}
       {item.imageSrc ? (
-        <img
+        <Image
           src={item.imageSrc}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          sizes="(min-width:1280px) 16vw, (min-width:768px) 24vw, 33vw"
+          className="object-cover"
         />
       ) : (
         // Fallback gradient if no SVG is provided
