@@ -7,6 +7,7 @@ import Sidebar from '@/components/Sidebar';
 import FinanzasSection from '@/components/sections/FinanzasSection';
 import ReporteriaSection from '@/components/sections/ReporteriaSection';
 import RecursosSection from '@/components/sections/RecursosSection';
+import ArchivosSection from '@/components/sections/ArchivosSection';
 import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
 import StatsCard from '@/components/StatsCard';
@@ -87,6 +88,7 @@ export default function Dashboard() {
           {activeSection === 'finanzas' && <FinanzasSection />}
           {activeSection === 'reporteria' && <ReporteriaSection />}
           {activeSection === 'recursos' && <RecursosSection />}
+          {activeSection === 'archivos' && <ArchivosSection />}
         </main>
       </div>
     </div>
