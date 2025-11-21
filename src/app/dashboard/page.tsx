@@ -9,6 +9,7 @@ import ReporteriaSection from '@/components/sections/ReporteriaSection';
 import RecursosSection from '@/components/sections/RecursosSection';
 import ArchivosSection from '@/components/sections/ArchivosSection';
 import AcuerdosSection from '@/components/sections/AcuerdosSection';
+import SolicitudesSection from '@/components/sections/SolicitudesSection';
 import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
 import StatsCard from '@/components/StatsCard';
@@ -91,6 +92,7 @@ export default function Dashboard() {
           {activeSection === 'recursos' && <RecursosSection />}
           {activeSection === 'archivos' && <ArchivosSection />}
           {activeSection === 'acuerdos' && <AcuerdosSection />}
+          {activeSection === 'solicitudes' && <SolicitudesSection />}
         </main>
       </div>
     </div>
