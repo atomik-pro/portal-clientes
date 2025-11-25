@@ -14,6 +14,7 @@ import heroImg from '@/assets/images/home.png';
 import Header from '@/components/Header';
 import StatsCard from '@/components/StatsCard';
 import CampaignsTable from '@/components/CampaignsTable';
+import TourGuide from '@/components/TourGuide';
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -51,6 +52,7 @@ export default function Dashboard() {
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      <TourGuide />
       <Header />
       <div className="flex flex-1 px-4 overflow-hidden">
         <Sidebar />

@@ -49,15 +49,31 @@ type MenuItem = {
   name: string;
   icon: StaticImageData | string;
   key: import('@/hooks/sidebar-context').SidebarSection;
+  id?: string;
 };
 const menuItems: MenuItem[] = [
   { name: 'Inicio', icon: iconInicio, key: 'inicio' },
   { name: 'Creativos', icon: iconCreativos, key: 'creativos' },
-  { name: 'Reporteria', icon: iconReportes, key: 'reporteria' },
+  {
+    name: 'Reporteria',
+    icon: iconReportes,
+    key: 'reporteria',
+    id: 'tour-reporteria'
+  },
   { name: 'Finanzas', icon: iconFinanzas, key: 'finanzas' },
   { name: 'Acuerdos', icon: iconLegales, key: 'acuerdos' },
-  { name: 'Solicitudes', icon: iconSolicitar, key: 'solicitudes' },
-  { name: 'Recursos', icon: iconRecursos, key: 'recursos' },
+  {
+    name: 'Solicitudes',
+    icon: iconSolicitar,
+    key: 'solicitudes',
+    id: 'tour-solicitudes'
+  },
+  {
+    name: 'Recursos',
+    icon: iconRecursos,
+    key: 'recursos',
+    id: 'tour-recursos'
+  },
   { name: 'Mis archivos', icon: iconMisArchivos, key: 'archivos' }
 ];
 
@@ -84,6 +100,7 @@ export default function Sidebar() {
           {menuItems.map((item) => (
             <li key={item.name}>
               <button
+                id={item.id}
                 type="button"
                 onClick={() => setActiveSection(item.key)}
                 className={`flex w-full items-center gap-3 px-3 py-2 rounded-l-full text-sm font-medium transition-all duration-200 ${
@@ -210,6 +227,7 @@ export default function Sidebar() {
             <li key={item.name}>
               {item.name === 'Mi equipo' ? (
                 <div
+                  id="tour-mi-equipo"
                   className={`group flex items-center gap-3 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer relative ${
                     activeSection === item.key
                       ? 'bg-atomik-gradient text-white shadow-lg'

@@ -1,0 +1,101 @@
+/* Custom styles for driver.js tour */
+
+/* Overlay color is handled in JS config, but we can enforce some things here if needed */
+
+/* Popover Container */
+.driver-popover.atomik-driver-popover {
+  background-color: transparent;
+  color: white;
+  box-shadow: none;
+  padding: 0;
+  max-width: 450px;
+  border-radius: 0;
+}
+
+/* Title */
+.driver-popover.atomik-driver-popover .driver-popover-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: white;
+  line-height: 1.2;
+}
+
+/* Description */
+.driver-popover.atomik-driver-popover .driver-popover-description {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+/* Hide the default arrow */
+.driver-popover.atomik-driver-popover .driver-popover-arrow {
+  display: none;
+}
+
+/* Footer / Buttons */
+.driver-popover.atomik-driver-popover .driver-popover-footer {
+  margin-top: 0;
+  display: flex;
+  justify-content: flex-start; /* Align buttons to left or right? Design shows button on right usually, but let's see */
+  gap: 12px;
+}
+
+/* Standardize buttons */
+.driver-popover.atomik-driver-popover .driver-popover-btn {
+  border: none;
+  border-radius: 9999px; /* Pill shape */
+  padding: 12px 32px;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Next / Done Button - The main action */
+.driver-popover.atomik-driver-popover .driver-popover-next-btn,
+.driver-popover.atomik-driver-popover .driver-popover-done-btn {
+  background-color: white;
+  color: #8d30ff; /* Violet text */
+}
+
+.driver-popover.atomik-driver-popover .driver-popover-next-btn:hover,
+.driver-popover.atomik-driver-popover .driver-popover-done-btn:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Previous Button - Make it subtle or hide it if not needed */
+.driver-popover.atomik-driver-popover .driver-popover-prev-btn {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.driver-popover.atomik-driver-popover .driver-popover-prev-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Close button (X) - Hide it as we have "Omitir" */
+.driver-popover.atomik-driver-popover .driver-popover-close-btn {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.driver-popover.atomik-driver-popover .driver-popover-close-btn:hover {
+  color: white;
+}
+
+/* Progress text */
+.driver-popover.atomik-driver-popover .driver-popover-progress-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
