@@ -90,8 +90,8 @@ export default function Dashboard() {
           )}
 
           {activeSection === 'finanzas' && <FinanzasSection />}
-          {activeSection === 'reporteria' && <ReporteriaSection />}
-          {activeSection === 'recursos' && <RecursosSection />}
+          {activeSection === 'campanas' && <ReporteriaSection />}
+          {activeSection === 'documentos' && <RecursosSection />}
           {activeSection === 'archivos' && <ArchivosSection />}
           {activeSection === 'acuerdos' && <AcuerdosSection />}
           {activeSection === 'solicitudes' && <SolicitudesSection />}

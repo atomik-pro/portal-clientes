@@ -55,10 +55,10 @@ const menuItems: MenuItem[] = [
   { name: 'Inicio', icon: iconInicio, key: 'inicio' },
   { name: 'Creativos', icon: iconCreativos, key: 'creativos' },
   {
-    name: 'Reporteria',
+    name: 'Campañas',
     icon: iconReportes,
-    key: 'reporteria',
-    id: 'tour-reporteria'
+    key: 'campanas',
+    id: 'tour-campanas'
   },
   { name: 'Finanzas', icon: iconFinanzas, key: 'finanzas' },
   { name: 'Acuerdos', icon: iconLegales, key: 'acuerdos' },
@@ -69,10 +69,10 @@ const menuItems: MenuItem[] = [
     id: 'tour-solicitudes'
   },
   {
-    name: 'Recursos',
+    name: 'Documentos',
     icon: iconRecursos,
-    key: 'recursos',
-    id: 'tour-recursos'
+    key: 'documentos',
+    id: 'tour-documentos'
   },
   { name: 'Mis archivos', icon: iconMisArchivos, key: 'archivos' }
 ];

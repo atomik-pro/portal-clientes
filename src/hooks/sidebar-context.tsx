@@ -4,11 +4,11 @@ import React, { createContext, useContext, useState } from 'react';
 export type SidebarSection =
   | 'inicio'
   | 'creativos'
-  | 'reporteria'
+  | 'campanas'
   | 'finanzas'
   | 'acuerdos'
   | 'solicitudes'
-  | 'recursos'
+  | 'documentos'
   | 'archivos'
   | 'ajustes'
   | 'notificaciones';

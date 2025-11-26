@@ -32,9 +32,9 @@ export default function TourGuide() {
             }
           },
           {
-            element: '#tour-reporteria',
+            element: '#tour-campanas',
             popover: {
-              title: 'Reportería',
+              title: 'Campañas',
               description:
                 'Consultá las métricas, reportes y resultados de tus campañas.',
               side: 'right',
@@ -52,9 +52,9 @@ export default function TourGuide() {
             }
           },
           {
-            element: '#tour-recursos',
+            element: '#tour-documentos',
             popover: {
-              title: 'Recursos',
+              title: 'Documentos',
               description:
                 'Encuentra guías, tutoriales y material de apoyo para sacar el máximo provecho a la plataforma.',
               side: 'right',
