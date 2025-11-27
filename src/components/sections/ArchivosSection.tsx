@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, useCallback } from 'react';
+import UploadFileModal from '../modals/UploadFileModal';
 
 interface FileItem {
   id: string;
@@ -68,6 +69,7 @@ export default function ArchivosSection() {
   const [statusFilter, setStatusFilter] = useState<
     'all' | 'approved' | 'pending' | 'rejected'
   >('all');
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const byQuery = initialFiles.filter((f) =>
@@ -106,6 +108,7 @@ export default function ArchivosSection() {
           <div className="hidden sm:flex items-center gap-2">
             <button
               type="button"
+              onClick={() => setIsUploadModalOpen(true)}
               className="px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-[#8D30FF] to-[#551D99] text-white shadow">
               Subir archivo
             </button>
@@ -234,6 +237,11 @@ export default function ArchivosSection() {
           </article>
         ))}
       </div>
+
+      <UploadFileModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+      />
     </section>
   );
 }
