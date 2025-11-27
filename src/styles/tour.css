@@ -41,14 +41,16 @@
 .driver-popover.atomik-driver-popover .driver-popover-footer {
   margin-top: 0;
   display: flex;
-  justify-content: flex-start; /* Align buttons to left or right? Design shows button on right usually, but let's see */
+  justify-content: flex-start;
+  /* Align buttons to left or right? Design shows button on right usually, but let's see */
   gap: 12px;
 }
 
 /* Standardize buttons */
 .driver-popover.atomik-driver-popover .driver-popover-btn {
   border: none;
-  border-radius: 9999px; /* Pill shape */
+  border-radius: 9999px;
+  /* Pill shape */
   padding: 12px 32px;
   font-weight: 700;
   font-size: 14px;
@@ -63,7 +65,8 @@
 .driver-popover.atomik-driver-popover .driver-popover-next-btn,
 .driver-popover.atomik-driver-popover .driver-popover-done-btn {
   background-color: white;
-  color: #8d30ff; /* Violet text */
+  color: #8d30ff;
+  /* Violet text */
 }
 
 .driver-popover.atomik-driver-popover .driver-popover-next-btn:hover,
@@ -98,4 +101,80 @@
 .driver-popover.atomik-driver-popover .driver-popover-progress-text {
   color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
+}
+
+/* --- Welcome Step Specific Styles --- */
+
+.driver-popover.atomik-welcome-popover {
+  background-color: #f3e8ff;
+  /* Light purple background from design */
+  color: #191919;
+  max-width: 600px;
+  border-radius: 32px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.driver-popover.atomik-welcome-popover .driver-popover-title {
+  color: #191919;
+  font-size: 24px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+/* Highlight "PORTAL DE CLIENTES" in purple if we can wrap it, 
+   otherwise we target the whole title. 
+   We'll use HTML in title to span the color. */
+
+.driver-popover.atomik-welcome-popover .driver-popover-description {
+  color: #191919;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.driver-popover.atomik-welcome-popover img {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  margin: 20px 0;
+  display: block;
+}
+
+/* Hide default buttons for welcome if we want custom ones, 
+   or style them to fit the light card */
+.driver-popover.atomik-welcome-popover .driver-popover-footer {
+  justify-content: center;
+  width: 100%;
+}
+
+.driver-popover.atomik-welcome-popover .driver-popover-next-btn {
+  background-color: #8d30ff;
+  color: white;
+  padding: 12px 40px;
+  border-radius: 9999px;
+}
+
+.driver-popover.atomik-welcome-popover .driver-popover-next-btn:hover {
+  background-color: #7020cc;
+}
+
+/* Hide prev button on welcome */
+.driver-popover.atomik-welcome-popover .driver-popover-prev-btn {
+  display: none;
+}
+
+/* --- Global Overlay Blur --- */
+/* Target the driver.js overlay SVG container if possible, or the path */
+/* driver.js usually appends an SVG with class 'driver-overlay' */
+.driver-overlay {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }

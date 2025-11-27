@@ -1,12 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
 import '../styles/tour.css';
+import welcomeImage from '@/assets/recurs/Quick-User-Guide.svg';
 
 export default function TourGuide() {
   const [isActive, setIsActive] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
+  const driverRef = useRef<ReturnType<typeof driver> | null>(null);
 
   useEffect(() => {
     const tourCompleted = localStorage.getItem('tour-completed');
@@ -16,18 +19,21 @@ export default function TourGuide() {
         showProgress: false, // Hide default progress to match clean design
         animate: true,
         allowClose: true,
-        overlayColor: 'rgba(141, 48, 255, 0.92)', // Violet overlay
+        overlayColor: 'rgba(141, 48, 255, 0.96)', // Increased opacity
         popoverClass: 'atomik-driver-popover', // Custom class
-        doneBtnText: 'OMITIR GUÍA', // Use this as the main "Exit" button if we want
+        // doneBtnText removed, using custom button
         nextBtnText: 'SIGUIENTE',
         prevBtnText: 'ANTERIOR',
         steps: [
           {
             popover: {
-              title: '¡Bienvenido a Atomik!',
-              description:
-                'Te invitamos a un recorrido rápido para que conozcas las herramientas clave de tu nuevo portal.',
-              side: 'bottom',
+              popoverClass: 'atomik-driver-popover atomik-welcome-popover',
+              title:
+                'BIENVENIDO AL <span style="color: #8D30FF;">PORTAL DE CLIENTES</span> ATOMIK',
+              description: `
+                <img src="${welcomeImage.src}" alt="Welcome" style="width: 100%; max-width: 350px; margin: 0 auto;" />
+                <p>Un espacio diseñado para centralizar y simplificar tu experiencia con nosotros.</p>
+              `,
               align: 'center'
             }
           },
@@ -78,40 +84,65 @@ export default function TourGuide() {
                 'Ya conoces lo esencial. ¡Explora y empieza a crecer con Atomik!',
               side: 'bottom',
               align: 'center',
-              doneBtnText: 'FINALIZAR'
+              doneBtnText: 'FINALIZAR' // Keep for last step if needed, or rely on custom button
             }
           }
         ],
-        onHighlightStarted: () => {
+        onHighlightStarted: (element, step) => {
           setIsActive(true);
+          // Hide title on welcome step (which has no element or specific class)
+          const isWelcome =
+            !step.element ||
+            step.popover?.popoverClass?.includes('atomik-welcome-popover');
+          setShowTitle(!isWelcome);
         },
         onDestroyStarted: () => {
-          if (!driverObj.hasNextStep() || confirm('¿Quieres salir del tour?')) {
-            driverObj.destroy();
+          // Logic moved to handleSkip
+          if (!driverObj.hasNextStep()) {
             localStorage.setItem('tour-completed', 'true');
             setIsActive(false);
+            driverObj.destroy();
           }
         }
       });
 
+      driverRef.current = driverObj;
       driverObj.drive();
     }
   }, []);
 
+  const handleSkip = () => {
+    if (driverRef.current) {
+      driverRef.current.destroy();
+      localStorage.setItem('tour-completed', 'true');
+      setIsActive(false);
+    }
+  };
+
   if (!isActive) return null;
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: '40px',
-        left: '60px',
-        zIndex: 1000000002, // Higher than driver.js overlay
-        pointerEvents: 'none'
-      }}>
-      <h1 className="text-3xl font-bold text-white tracking-wide">
-        GUÍA RÁPIDA DE USO
-      </h1>
-    </div>
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          top: '40px',
+          left: '60px',
+          zIndex: 1000000002,
+          pointerEvents: 'none'
+        }}>
+        {showTitle && (
+          <h1 className="text-3xl font-bold text-white tracking-wide">
+            GUÍA RÁPIDA DE USO
+          </h1>
+        )}
+      </div>
+
+      <button
+        onClick={handleSkip}
+        className="fixed bottom-10 right-10 bg-white text-[#8D30FF] rounded-full px-8 py-3 font-bold shadow-lg hover:bg-gray-100 transition-all transform hover:scale-105 z-[1000000002] uppercase tracking-wide text-sm">
+        OMITIR GUÍA
+      </button>
+    </>
   );
 }
