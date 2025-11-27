@@ -10,17 +10,18 @@ export default function TourGuide() {
   const [isActive, setIsActive] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const driverRef = useRef<ReturnType<typeof driver> | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const tourCompleted = localStorage.getItem('tour-completed');
 
     if (!tourCompleted) {
       const driverObj = driver({
-        showProgress: false, // Hide default progress to match clean design
+        showProgress: false,
         animate: true,
-        allowClose: true,
-        overlayColor: 'rgba(141, 48, 255, 0.96)', // Increased opacity
-        popoverClass: 'atomik-driver-popover', // Custom class
+        allowClose: false, // Prevent closing by clicking overlay, so our button is the only way
+        overlayColor: 'rgba(141, 48, 255, 0.96)',
+        popoverClass: 'atomik-driver-popover',
         // doneBtnText removed, using custom button
         nextBtnText: 'SIGUIENTE',
         prevBtnText: 'ANTERIOR',
@@ -81,37 +82,62 @@ export default function TourGuide() {
             popover: {
               title: '¡Todo listo!',
               description:
-                'Ya conoces lo esencial. ¡Explora y empieza a crecer con Atomik!',
+                'Todo lo que necesitás para gestionar y optimizar tus campañas está acá. Explorá y aprovechá al máximo tu portal.',
               side: 'bottom',
-              align: 'center',
-              doneBtnText: 'FINALIZAR' // Keep for last step if needed, or rely on custom button
+              align: 'center'
             }
           }
         ],
         onHighlightStarted: (element, step) => {
           setIsActive(true);
-          // Hide title on welcome step (which has no element or specific class)
+
+          // Hide title on welcome step
           const isWelcome =
             !step.element ||
             step.popover?.popoverClass?.includes('atomik-welcome-popover');
           setShowTitle(!isWelcome);
+
+          // Auto-advance logic
+          if (timerRef.current) clearTimeout(timerRef.current);
+
+          timerRef.current = setTimeout(() => {
+            if (driverObj.hasNextStep()) {
+              driverObj.moveNext();
+            } else {
+              // Last step, finish tour
+              driverObj.destroy();
+              localStorage.setItem('tour-completed', 'true');
+              setIsActive(false);
+            }
+          }, 4000); // 4 seconds per step
         },
         onDestroyStarted: () => {
-          // Logic moved to handleSkip
+          if (timerRef.current) clearTimeout(timerRef.current);
+
+          // Ensure we clean up if destroyed manually or by end of tour
           if (!driverObj.hasNextStep()) {
             localStorage.setItem('tour-completed', 'true');
-            setIsActive(false);
-            driverObj.destroy();
           }
+          setIsActive(false);
+          driverObj.destroy();
         }
       });
 
       driverRef.current = driverObj;
       driverObj.drive();
     }
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (driverRef.current) driverRef.current.destroy();
+    };
   }, []);
 
-  const handleSkip = () => {
+  const handleSkip = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (timerRef.current) clearTimeout(timerRef.current);
+
     if (driverRef.current) {
       driverRef.current.destroy();
       localStorage.setItem('tour-completed', 'true');

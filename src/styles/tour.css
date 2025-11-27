@@ -178,3 +178,8 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
+
+/* Hide default footer (buttons) as requested */
+.driver-popover-footer {
+  display: none !important;
+}
