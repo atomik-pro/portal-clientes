@@ -71,7 +71,7 @@ export default function ReporteriaSection() {
             <div className="flex items-center gap-3">
               <span className="inline-block w-8 h-4 rounded-r-full bg-atomik-gradient" />
               <h1 className="text-2xl sm:text-3xl font-bold tracking-wide text-[#191919]">
-                Reporteria
+                Campañas
               </h1>
             </div>
             {/* Filtros */}
@@ -111,7 +111,7 @@ export default function ReporteriaSection() {
                 Sin resultados
               </h2>
               <p className="text-sm text-gray-600">
-                No encontramos reportes para “{query}”. Intenta con otro término
+                No encontramos campañas para “{query}”. Intenta con otro término
                 o limpia el filtro.
               </p>
               <button

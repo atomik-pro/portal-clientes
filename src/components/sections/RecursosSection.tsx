@@ -294,7 +294,7 @@ export default function RecursosSection() {
         <div className="flex items-center gap-3">
           <span className="inline-block w-8 h-4 rounded-r-full bg-atomik-gradient" />
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
-            Recursos
+            Documentos
           </h2>
         </div>
         <div className="flex items-center gap-3" ref={filtersMenuRef}>
@@ -397,7 +397,7 @@ export default function RecursosSection() {
             No hay resultados
           </p>
           <p className="text-sm text-gray-600">
-            Ajusta los filtros para ver más recursos.
+            Ajusta los filtros para ver más documentos.
           </p>
         </div>
       )}

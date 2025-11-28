@@ -8,9 +8,8 @@ interface FileItem {
   name: string;
   type: 'pdf' | 'docx' | 'xlsx' | 'png' | 'jpg' | 'svg' | 'pptx' | 'txt';
   sizeKB: number;
-  updatedAt: string; // ISO date string
+  updatedAt: string;
   owner: string;
-  status?: 'approved' | 'pending' | 'rejected';
 }
 
 const initialFiles: FileItem[] = [
@@ -20,8 +19,7 @@ const initialFiles: FileItem[] = [
     type: 'pdf',
     sizeKB: 482,
     updatedAt: '2025-11-10',
-    owner: 'Legal Team',
-    status: 'approved'
+    owner: 'Legal Team'
   },
   {
     id: 'F-0002',
@@ -29,8 +27,7 @@ const initialFiles: FileItem[] = [
     type: 'docx',
     sizeKB: 120,
     updatedAt: '2025-11-15',
-    owner: 'CS Team',
-    status: 'pending'
+    owner: 'CS Team'
   },
   {
     id: 'F-0003',
@@ -38,8 +35,7 @@ const initialFiles: FileItem[] = [
     type: 'xlsx',
     sizeKB: 996,
     updatedAt: '2025-10-28',
-    owner: 'Finance Team',
-    status: 'approved'
+    owner: 'Finance Team'
   },
   {
     id: 'F-0004',
@@ -47,8 +43,7 @@ const initialFiles: FileItem[] = [
     type: 'pdf',
     sizeKB: 312,
     updatedAt: '2025-09-03',
-    owner: 'Studio',
-    status: 'approved'
+    owner: 'Studio'
   },
   {
     id: 'F-0005',
@@ -56,8 +51,7 @@ const initialFiles: FileItem[] = [
     type: 'png',
     sizeKB: 144,
     updatedAt: '2025-11-20',
-    owner: 'Client',
-    status: 'approved'
+    owner: 'Client'
   }
 ];
 
@@ -66,27 +60,19 @@ type SortKey = 'updatedAt' | 'name' | 'sizeKB';
 export default function ArchivosSection() {
   const [query, setQuery] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('updatedAt');
-  const [statusFilter, setStatusFilter] = useState<
-    'all' | 'approved' | 'pending' | 'rejected'
-  >('all');
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const byQuery = initialFiles.filter((f) =>
       f.name.toLowerCase().includes(query.toLowerCase())
     );
-    const byStatus =
-      statusFilter === 'all'
-        ? byQuery
-        : byQuery.filter((f) => f.status === statusFilter);
-    const sorted = [...byStatus].sort((a, b) => {
+    const sorted = [...byQuery].sort((a, b) => {
       if (sortKey === 'name') return a.name.localeCompare(b.name);
       if (sortKey === 'sizeKB') return b.sizeKB - a.sizeKB;
-      // updatedAt
       return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
     });
     return sorted;
-  }, [query, sortKey, statusFilter]);
+  }, [query, sortKey]);
 
   const onQueryChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,11 +97,6 @@ export default function ArchivosSection() {
               onClick={() => setIsUploadModalOpen(true)}
               className="px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-[#8D30FF] to-[#551D99] text-white shadow">
               Subir archivo
-            </button>
-            <button
-              type="button"
-              className="px-3 py-2 rounded-full text-xs font-medium border border-gray-200 text-[#191919]">
-              Nueva carpeta
             </button>
           </div>
         </div>
@@ -147,25 +128,6 @@ export default function ArchivosSection() {
               <option value="sizeKB">Tamaño</option>
             </select>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="status" className="text-sm text-gray-600">
-              Estado:
-            </label>
-            <select
-              id="status"
-              value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(
-                  e.target.value as 'all' | 'approved' | 'pending' | 'rejected'
-                )
-              }
-              className="px-3 py-2 rounded-2xl border border-gray-200 text-sm">
-              <option value="all">Todos</option>
-              <option value="approved">Aprobado</option>
-              <option value="pending">Pendiente</option>
-              <option value="rejected">Rechazado</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -189,22 +151,6 @@ export default function ArchivosSection() {
                     </p>
                   </div>
                 </div>
-                {file.status && (
-                  <span
-                    className={`text-[10px] px-2 py-1 rounded-full border ${
-                      file.status === 'approved'
-                        ? 'text-green-700 border-green-200 bg-green-50'
-                        : file.status === 'pending'
-                          ? 'text-amber-700 border-amber-200 bg-amber-50'
-                          : 'text-red-700 border-red-200 bg-red-50'
-                    }`}>
-                    {file.status === 'approved'
-                      ? 'Aprobado'
-                      : file.status === 'pending'
-                        ? 'Pendiente'
-                        : 'Rechazado'}
-                  </span>
-                )}
               </div>
 
               <div className="mt-4 flex items-center justify-between text-xs text-gray-600">
@@ -225,11 +171,6 @@ export default function ArchivosSection() {
                     type="button"
                     className="px-2 py-1 rounded-full text-[11px] border border-gray-200 hover:border-[#8D30FF] hover:text-[#8D30FF]">
                     Ver
-                  </button>
-                  <button
-                    type="button"
-                    className="px-2 py-1 rounded-full text-[11px] border border-gray-200 hover:border-[#8D30FF] hover:text-[#8D30FF]">
-                    Descargar
                   </button>
                 </div>
               </div>
