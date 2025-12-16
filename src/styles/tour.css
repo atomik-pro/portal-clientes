@@ -172,14 +172,23 @@
 }
 
 /* --- Global Overlay Blur --- */
+/* --- Global Overlay Blur --- */
 /* Target the driver.js overlay SVG container if possible, or the path */
 /* driver.js usually appends an SVG with class 'driver-overlay' */
-.driver-overlay {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
+/* .driver-overlay { */
+/* Blur removed to ensure sidebar icons are sharp */
+/* backdrop-filter: blur(5px); */
+/* -webkit-backdrop-filter: blur(5px); */
+/* } */
 
 /* Hide default footer (buttons) as requested */
 .driver-popover-footer {
   display: none !important;
+}
+
+/* Fix for "shadow point" visual artifact when tour finishes */
+/* This ensures the stage doesn't shrink to a visible dot */
+.driver-stage-no-animation {
+  box-shadow: none !important;
+  opacity: 0 !important;
 }

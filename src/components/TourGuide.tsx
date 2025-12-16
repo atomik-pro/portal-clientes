@@ -80,6 +80,7 @@ export default function TourGuide() {
           },
           {
             popover: {
+              popoverClass: 'atomik-driver-popover atomik-final-popover',
               title: '¡Todo listo!',
               description:
                 'Todo lo que necesitás para gestionar y optimizar tus campañas está acá. Explorá y aprovechá al máximo tu portal.',
